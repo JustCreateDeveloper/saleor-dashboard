@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useAppListContext } from "@saleor/apps/context";
+import { isAppInTunnel } from "@saleor/apps/is-app-in-tunnel";
 import { appUrl } from "@saleor/apps/urls";
 import CardTitle from "@saleor/components/CardTitle";
 import { IconButton } from "@saleor/components/IconButton";
@@ -70,7 +71,13 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     <span data-tc="name" className={classes.appName}>
                       {app.node.name}
                     </span>
+                    {isAppInTunnel(app.node.manifestUrl) ? (
+                      <Typography variant="caption">
+                        (TUNNEL - DEVELOPMENT)
+                      </Typography>
+                    ) : null}
                   </TableCell>
+
                   <TableCell className={classes.colAction}>
                     {app.node.manifestUrl && (
                       <Typography
